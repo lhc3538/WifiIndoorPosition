@@ -55,6 +55,20 @@ string SocketTransfer::Recv()
         perror("recv length error");
         return string();
     }
+    char *p = (char*) &length;
+    printf("[0]=%d",p[0]);
+    printf("[1]=%d",p[1]);
+    printf("[2]=%d",p[2]);
+    printf("[3]=%d",p[3]);
+    int test;
+    char *tp = (char*) &test;
+    tp[0] = p[3];
+    tp[1] = p[2];
+    tp[2] = p[1];
+    tp[3] - p[0];
+    cout << "test size:" << test << endl;
+    cout << "recv size:" << length << endl;
+    length = test;
     //recv the buffer
     char *buffer = (char*)malloc(length+1);
     rul = recv(fd_sock,buffer,length,0);

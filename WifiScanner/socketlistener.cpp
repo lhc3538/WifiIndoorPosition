@@ -41,6 +41,7 @@ int SocketListener::WaitClient()
    struct sockaddr_in client_addr;
    socklen_t length = sizeof(client_addr);
    printf("等待客户端连接\n");
+
    ///成功返回非负描述字，出错返回-1
    int conn = accept(fd_ser, (struct sockaddr*)&client_addr, &length);
    if(conn<0)

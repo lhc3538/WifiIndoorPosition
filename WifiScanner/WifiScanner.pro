@@ -13,3 +13,5 @@ SOURCES += main.cpp \
 HEADERS += \
     socketlistener.h \
     sockettransfer.h
+
+LIBS += -pthread
