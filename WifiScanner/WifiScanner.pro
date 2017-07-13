@@ -8,10 +8,10 @@ INSTALLS += target
 
 SOURCES += main.cpp \
     socketlistener.cpp \
-    sockettransfer.cpp
+    ../Common/sockettransfer.cpp
 
 HEADERS += \
     socketlistener.h \
-    sockettransfer.h
+    ../Common/sockettransfer.h
 
 LIBS += -pthread

@@ -52,3 +52,10 @@ int SocketListener::WaitClient()
    printf("客户端成功连接\n");
    return conn;
 }
+
+void SocketListener::Close()
+{
+    if (fd_ser != NULL)
+        close(fd_ser);
+    fd_ser = NULL;
+}

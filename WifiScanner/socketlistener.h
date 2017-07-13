@@ -7,6 +7,7 @@ class SocketListener
 public:
     SocketListener(int port,int queue);
     int WaitClient();
+    void Close();
 
 private:
     int fd_ser;

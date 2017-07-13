@@ -4,9 +4,11 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    sockettransfer.cpp \
-    socketconnector.cpp
+    ../Common/sockettransfer.cpp \
+    socketconnector.cpp \
+    wificell.cpp
 
 HEADERS += \
-    sockettransfer.h \
-    socketconnector.h
+    ../Common/sockettransfer.h \
+    socketconnector.h \
+    wificell.h

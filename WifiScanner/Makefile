@@ -49,7 +49,7 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../WifiScanner/main.cpp \
 		../WifiScanner/socketlistener.cpp \
-		../WifiScanner/sockettransfer.cpp 
+		../Common/sockettransfer.cpp 
 OBJECTS       = main.o \
 		socketlistener.o \
 		sockettransfer.o
@@ -198,7 +198,7 @@ DIST          = ../../Qt/output/Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf
 		../WifiScanner/WifiScanner.pro socketlistener.h \
 		sockettransfer.h ../WifiScanner/main.cpp \
 		../WifiScanner/socketlistener.cpp \
-		../WifiScanner/sockettransfer.cpp
+		../Common/sockettransfer.cpp
 QMAKE_TARGET  = WifiScanner
 DESTDIR       = 
 TARGET        = WifiScanner
@@ -353,7 +353,6 @@ Makefile: ../WifiScanner/WifiScanner.pro ../../Qt/output/Qt5.7.0/5.7/gcc_64/mksp
 		../../Qt/output/Qt5.7.0/5.7/gcc_64/mkspecs/features/yacc.prf \
 		../../Qt/output/Qt5.7.0/5.7/gcc_64/mkspecs/features/lex.prf \
 		../WifiScanner/WifiScanner.pro
-	$(QMAKE) -spec linux-g++ -o Makefile ../WifiScanner/WifiScanner.pro
 ../../Qt/output/Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf:
 ../../Qt/output/Qt5.7.0/5.7/gcc_64/mkspecs/common/unix.conf:
 ../../Qt/output/Qt5.7.0/5.7/gcc_64/mkspecs/common/linux.conf:
@@ -541,14 +540,14 @@ compiler_clean:
 ####### Compile
 
 main.o: ../WifiScanner/main.cpp ../WifiScanner/socketlistener.h \
-		../WifiScanner/sockettransfer.h
+		../Common/sockettransfer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../WifiScanner/main.cpp
 
 socketlistener.o: ../WifiScanner/socketlistener.cpp ../WifiScanner/socketlistener.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o socketlistener.o ../WifiScanner/socketlistener.cpp
 
-sockettransfer.o: ../WifiScanner/sockettransfer.cpp ../WifiScanner/sockettransfer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sockettransfer.o ../WifiScanner/sockettransfer.cpp
+sockettransfer.o: ../Common/sockettransfer.cpp ../Common/sockettransfer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sockettransfer.o ../Common/sockettransfer.cpp
 
 ####### Install
 

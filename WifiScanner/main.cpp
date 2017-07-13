@@ -1,10 +1,11 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
+#include <unistd.h>
 #include <pthread.h>
 
 #include "socketlistener.h"
-#include "sockettransfer.h"
+#include "../Common/sockettransfer.h"
 
 using namespace std;
 
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
         }
         pthread_detach(pt);
     }
+    sockListener.Close();
     return 0;
 }
 
@@ -42,15 +44,28 @@ void* serveClient(void* fd_p)
     while(1)
     {
         SocketTransfer sockTransfer(fd_cli);
+        ///recv cmd from client
         string cmd_str = sockTransfer.Recv();
-        if (cmd_str.empty())
+        cout << "cmd_str.size=" << cmd_str.size() << endl;
+        if (cmd_str.size() == 0)
         {
-            printf("client offline\n");
+            perror("client offline\n");
             break;
         }
+
+        ///execute the cmd of client
         string cmd_rul = executeCMD(cmd_str);
-        sockTransfer.Send(cmd_rul);
+
+        ///send the result of cmd-running to client
+        int ret = sockTransfer.Send(cmd_rul);
+        if (ret < 0)
+        {
+            perror("client offline\n");
+            break;
+        }
     }
+    close(fd_cli);
+    return NULL;
 }
 
 /**

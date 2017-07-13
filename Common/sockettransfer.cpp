@@ -22,12 +22,13 @@ int SocketTransfer::Send(string str)
     int rul;
     //send the buffer size
     int length = str.size();
-//    cout << "send size:" << length << endl;
+    cout << "send size:" << length << endl;
     rul = send(fd_sock,&length,sizeof(int),0);
     if (rul <= 0) {
         perror("send length error");
         return -1;
     }
+
     //send the buffer
     rul = send(fd_sock,str.data(),length,0);
     if (rul <= 0) {
@@ -40,37 +41,49 @@ int SocketTransfer::Send(string str)
 string SocketTransfer::Recv()
 {
     int rul;
-    cout << "int size=" << sizeof(int) << endl;
+
     //recv the size of buffer
-    int length;
+    int length = 0;
     rul = recv(fd_sock,&length,sizeof(int),0);
     if (rul <= 0) {
         perror("recv length error");
-        return string();
+        return string("");
     }
-    char *p = (char*) &length;
-    printf("[0]=%d",p[0]);
-    printf("[1]=%d",p[1]);
-    printf("[2]=%d",p[2]);
-    printf("[3]=%d",p[3]);
-    int test;
-    char *tp = (char*) &test;
-    tp[0] = p[3];
-    tp[1] = p[2];
-    tp[2] = p[1];
-    tp[3] - p[0];
-    cout << "test size:" << test << endl;
-    cout << "recv size:" << length << endl;
-    length = test;
+    cout << "length_ori=" << length << endl;
+#if DIFFER_ENDIAN == 1
+    length = TransfEndian(length);
+#endif
+    cout << "length=" << length << endl;
     //recv the buffer
     char *buffer = (char*)malloc(length+1);
-    rul = recv(fd_sock,buffer,length,0);
-    if (rul <= 0) {
-        perror("recv data error");
-        return string();
+    rul = 0;
+    while(rul != length)
+    {
+        int ret = recv(fd_sock,buffer+rul,length-rul,0);
+        cout << "ret=" << ret << endl;
+        if (ret <= 0) {
+            perror("recv data error");
+            return string("");
+        }
+        rul += ret;
     }
+
     buffer[length] = 0;
     string str = string(buffer);
     free(buffer);
     return str;
 }
+
+#if DIFFER_ENDIAN == 1
+int SocketTransfer::TransfEndian(int num)
+{
+    int rul = 0;
+    char *p = (char*) &num;
+    char *tp = (char*) &rul;
+    tp[0] = p[3];
+    tp[1] = p[2];
+    tp[2] = p[1];
+    tp[3] = p[0];
+    return rul;
+}
+#endif
