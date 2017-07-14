@@ -6,9 +6,11 @@ CONFIG -= qt
 SOURCES += main.cpp \
     ../Common/sockettransfer.cpp \
     socketconnector.cpp \
-    wificell.cpp
+    wificell.cpp \
+    stringutils.cpp
 
 HEADERS += \
     ../Common/sockettransfer.h \
     socketconnector.h \
-    wificell.h
+    wificell.h \
+    stringutils.h

@@ -25,6 +25,8 @@ WifiCell::WifiCell(string cellstr)
     setSsid(str_value[1]);
     str_value = stringUtils.Split(str_line[2],": ");
     setChannel(str_value[2]);
+    str_value = stringUtils.Split(str_line[3],": ");
+    setSignal(str_value[2]);
 }
 
 string WifiCell::getAddress() const
