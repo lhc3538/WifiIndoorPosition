@@ -12,6 +12,13 @@ StringUtils::StringUtils()
 
 }
 
+/**
+ * @brief StringUtils::Split
+ * split string by separator
+ * @param src
+ * @param separator
+ * @return
+ */
 vector<string> StringUtils::Split(const string &src, const string &separator)
 {
     vector<string> rul;
@@ -45,20 +52,45 @@ vector<string> StringUtils::Split(const string &src, const string &separator)
     return rul;
 }
 
+/**
+ * @brief StringUtils::GetMiddleStr
+ * get the sub str from str_start and str_end
+ * @param src
+ * @param str_start
+ * @param str_end
+ * @return
+ */
 string StringUtils::GetMiddleStr(const string &src, const string &str_start, const string &str_end)
 {
     int src_size = src.size();
     int str_start_size = str_start.size();
     int str_end_size = str_end.size();
-    for(int i=0;i<src_size;i++)
+    int index_start = 0;
+    int index_end = 0;
+    int i;
+    for(i=0;i<src_size;i++)
     {
         int j;
         for(j=0;j<str_start_size;j++)
             if(src[i+j]!=str_start[j])
                 break;
+        //equal the start string
         if (j == str_start_size)
         {
-
+            index_start = i + str_start_size;
+            for(int k=src_size-1;k>index_start;k--)
+            {
+                int l;
+                for(l=str_end_size-1;l>=0;l--)
+                    if(src[k-str_end_size+l+1]!=str_end[l])
+                        break;
+                if (l == -1)
+                {
+                    index_end = k - str_end_size;
+                    return src.substr(index_start,index_end-index_start+1);
+                }
+            }
         }
     }
+    return string("");
 }

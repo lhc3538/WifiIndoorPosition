@@ -2,6 +2,7 @@
 #define WIFICELL_H
 
 #include <string>
+#include <time.h>
 
 using namespace std;
 

@@ -2,6 +2,7 @@
 #include "socketconnector.h"
 #include "../Common/sockettransfer.h"
 #include "stringutils.h"
+#include "wificell.h"
 
 using namespace std;
 
@@ -18,6 +19,10 @@ int main(int argc, char *argv[])
 //        cout << rul[i] << ";;;;;" << endl;
 //    }
 
+//    string cell = "Signal: -42 dBm  Quality: 68/70";
+//    string str_mid = StringUtils().GetMiddleStr(cell,": "," dBm");
+//    cout << str_mid << endl;
+
     SocketConnector sockConnector;
     int fd_cli = sockConnector.ConnectServer("192.168.1.131",3538);
 //    int fd_cli = sockConnector.ConnectServer("127.0.0.1",3538);
@@ -27,10 +32,11 @@ int main(int argc, char *argv[])
     {
         sockTransfer.Send("iwinfo wlan0 scan");
         string str = sockTransfer.Recv();
-        vector<string> rul = StringUtils().Split(str,"\n\n");
-        for(int i=0;i<rul.size();i++)
+        vector<string> str_cells = StringUtils().Split(str,"\n\n");
+        for(int i=0;i<str_cells.size();i++)
         {
-            cout << rul[i] << ";;;;;" << endl;
+//            cout << str_cells[i] << ";;;;;" << endl;
+            WifiCell wifiCell(str_cells[i]);
         }
     }
 

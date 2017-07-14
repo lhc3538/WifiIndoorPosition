@@ -22,7 +22,7 @@ int SocketTransfer::Send(string str)
     int rul;
     //send the buffer size
     int length = str.size();
-    cout << "send size:" << length << endl;
+//    cout << "send size:" << length << endl;
     rul = send(fd_sock,&length,sizeof(int),0);
     if (rul <= 0) {
         perror("send length error");
@@ -49,11 +49,11 @@ string SocketTransfer::Recv()
         perror("recv length error");
         return string("");
     }
-    cout << "length_ori=" << length << endl;
+//    cout << "length_ori=" << length << endl;
 #if DIFFER_ENDIAN == 1
     length = TransfEndian(length);
 #endif
-    cout << "length=" << length << endl;
+//    cout << "length=" << length << endl;
     //recv the buffer
     char *buffer = (char*)malloc(length+1);
     rul = 0;
