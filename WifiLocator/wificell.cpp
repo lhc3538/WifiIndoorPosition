@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <time.h>
 
 //Cell 01 - Address: 8C:AB:8E:A4:CD:58
 //          ESSID: "LeonOpenWrt"
@@ -33,12 +34,15 @@ WifiCell::WifiCell(string cellstr)
     cout << "channel:" << getChannel() << endl;
 
     string str_mid = stringUtils.GetMiddleStr(str_line[3],": "," dBm");
-    setSignal(stoi(str_value[2]));
+    setSignal(stoi(str_mid));
     cout << "signal:" << getSignal() << endl;
 
     str_value = stringUtils.Split(str_line[3],": ");
     setQuality(str_value[2]);
     cout << "Quality:" << getQuality() << endl;
+
+    setTimestamp(time((time_t*)NULL));
+    cout << "timestamp:" << getTimestamp() << endl;
 }
 
 string WifiCell::getAddress() const
@@ -89,4 +93,14 @@ string WifiCell::getQuality() const
 void WifiCell::setQuality(const string &value)
 {
     quality = value;
+}
+
+unsigned long WifiCell::getTimestamp() const
+{
+    return timestamp;
+}
+
+void WifiCell::setTimestamp(unsigned long value)
+{
+    timestamp = value;
 }

@@ -33,12 +33,16 @@ public:
     string getQuality() const;
     void setQuality(const string &value);
 
+    unsigned long getTimestamp() const;
+    void setTimestamp(unsigned long value);
+
 private:
     string address;
     string ssid;
     int channel;
     int signal;
     string quality;
+    unsigned long  timestamp;
 
 };
 
