@@ -4,32 +4,37 @@
 #include "stringutils.h"
 #include "wificell.h"
 #include "dbopter.h"
+#include "wificellarray.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-//    SocketConnector sockConnector;
-//    int fd_cli = sockConnector.ConnectServer("192.168.1.131",3538);
-////    int fd_cli = sockConnector.ConnectServer("127.0.0.1",3538);
-//    SocketTransfer sockTransfer(fd_cli);
+    SocketConnector sockConnector;
+    int fd_cli = sockConnector.ConnectServer("192.168.1.131",3538);
+//    int fd_cli = sockConnector.ConnectServer("127.0.0.1",3538);
+    SocketTransfer sockTransfer(fd_cli);
 
-//    while(1)
-//    {
-//        sockTransfer.Send("iwinfo wlan0 scan");
-//        string str = sockTransfer.Recv();
-//        vector<string> str_cells = StringUtils().Split(str,"\n\n");
-//        for(int i=0;i<str_cells.size();i++)
-//        {
-//            WifiCell wifiCell(str_cells[i]);
-//        }
-//    }
+    while(1)
+    {
+        sockTransfer.Send("iwinfo wlan0 scan");
+        string str = sockTransfer.Recv();
+        if (str.empty())
+            break;
+        WifiCellArray cells(str);
+
+        DbOpter dbopter;
+        dbopter.initDB("139.199.27.197","wifipos","iotiot128","wifi_training_set");
+        dbopter.insertWifiCellArray("A6",cells);
+
+    }
 //-------------------------------------------------------------------------------
 
-    DbOpter dbopter;
-    bool ret = dbopter.initDB("139.199.27.197","wifipos","iotiot128","wifi_training_set");
-    cout << ret << endl;
-    dbopter.exeSQL("SELECT * FROM level_meter");
+//    DbOpter dbopter;
+//    bool ret = dbopter.initDB("139.199.27.197","wifipos","iotiot128","wifi_training_set");
+//    cout << ret << endl;
+////    dbopter.exeSQL("SELECT * FROM level_meter");
+//    dbopter.insertRow("A2",-1,-2,-3,-4,-5,-6);
 
     //    vector<string> rul = StringUtils().Split("a\nb\nc\n\nd\ne\nf\n","\n\n");
     //    for(int i=0;i<rul.size();i++)

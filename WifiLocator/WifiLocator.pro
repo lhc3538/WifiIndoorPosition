@@ -11,11 +11,13 @@ SOURCES += main.cpp \
     socketconnector.cpp \
     wificell.cpp \
     stringutils.cpp \
-    dbopter.cpp
+    dbopter.cpp \
+    wificellarray.cpp
 
 HEADERS += \
     ../Common/sockettransfer.h \
     socketconnector.h \
     wificell.h \
     stringutils.h \
-    dbopter.h
+    dbopter.h \
+    wificellarray.h

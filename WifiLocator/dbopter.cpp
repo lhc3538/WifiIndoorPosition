@@ -1,4 +1,7 @@
 #include <iostream>
+#include <sstream>
+#include <cstdlib>
+
 #include "dbopter.h"
 
 
@@ -67,4 +70,36 @@ bool DbOpter::exeSQL(string sql)
         mysql_free_result(result);
     }
     return true;
+}
+
+bool DbOpter::insertRow(string pos, int G1, int G2, int G3, int C1, int C2, int C3)
+{
+    stringstream sql_stream;
+    sql_stream << "INSERT INTO level_meter VALUES(NULL, \"" <<
+              pos << "\"," <<
+              G1 << "," <<
+              G2 << "," <<
+              G3 << "," <<
+              C1 << "," <<
+              C2 << "," <<
+              C3 << ")";
+
+    cout << sql_stream.str() << endl;
+    if(mysql_query(connection, sql_stream.str().c_str()))
+    {
+        cout << "Query Error:" << mysql_error(connection);
+        return false;
+    }
+    return true;
+}
+
+bool DbOpter::insertWifiCellArray(string pos,WifiCellArray cells)
+{
+    insertRow(pos,
+              cells.getSignalByMac("00:34:CB:E4:DC:54"),
+              cells.getSignalByMac("00:34:CB:E4:DC:48"),
+              cells.getSignalByMac("00:34:CB:E4:DC:4C"),
+              cells.getSignalByMac("00:17:7B:31:0C:13"),
+              cells.getSignalByMac("00:17:7B:9C:19:4D"),
+              cells.getSignalByMac("00:17:7B:32:E0:1D"));
 }
