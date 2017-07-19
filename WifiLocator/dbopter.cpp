@@ -93,10 +93,10 @@ bool DbOpter::exeSQL(string sql)
 //    return true;
 //}
 
-bool DbOpter::insertRow(string pos, int G1, int G2, int G3, int C1, int C2, int C3, int O1, int O2, int O3)
+bool DbOpter::insertRow(string table,string pos, int G1, int G2, int G3, int C1, int C2, int C3, int O1, int O2, int O3)
 {
     stringstream sql_stream;
-    sql_stream << "INSERT INTO level_twometers_direction VALUES(NULL, \"" <<
+    sql_stream << "INSERT INTO " + table + " VALUES(NULL, \"" <<
               pos << "\"," <<
               G1 << "," <<
               G2 << "," <<
@@ -117,7 +117,7 @@ bool DbOpter::insertRow(string pos, int G1, int G2, int G3, int C1, int C2, int 
     return true;
 }
 
-bool DbOpter::insertWifiCellArray(string pos,WifiCellArray cells)
+bool DbOpter::insertWifiCellArray(string table, string pos,WifiCellArray cells)
 {
 //    if (pos.size() == 2)
 //    {
@@ -131,7 +131,7 @@ bool DbOpter::insertWifiCellArray(string pos,WifiCellArray cells)
 //    }
 //    else
 //    {
-        insertRow(pos,
+        insertRow(table, pos,
                   cells.getSignalByMac("00:34:CB:E4:DC:54"),
                   cells.getSignalByMac("00:34:CB:E4:DC:48"),
                   cells.getSignalByMac("00:34:CB:E4:DC:4C"),

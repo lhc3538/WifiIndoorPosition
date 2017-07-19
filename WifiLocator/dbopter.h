@@ -15,10 +15,10 @@ public:
     bool initDB(string host, string user, string pwd, string db_name);
     bool exeSQL(string sql);
 //    bool insertRow(string pos,int G1=-96,int G2=-96,int G3=-96,int C1=-96,int C2=-96,int C3=-96);
-    bool insertRow(string pos,int G1=-96,int G2=-96,int G3=-96,\
+    bool insertRow(string table,string pos,int G1=-96,int G2=-96,int G3=-96,\
                    int C1=-96,int C2=-96,int C3=-96,\
                    int O1=-96,int O2=-96,int O3=-96);
-    bool insertWifiCellArray(string pos,WifiCellArray cells);
+    bool insertWifiCellArray(string table,string pos,WifiCellArray cells);
 
 private:
         MYSQL *connection;

@@ -8,27 +8,30 @@
 
 using namespace std;
 
+void level_threemeters(string pos);
+
 int main(int argc, char *argv[])
 {
-    SocketConnector sockConnector;
-    int fd_cli = sockConnector.ConnectServer("192.168.1.131",3538);
-//    int fd_cli = sockConnector.ConnectServer("127.0.0.1",3538);
-    SocketTransfer sockTransfer(fd_cli);
+    level_threemeters("A1");
+//    SocketConnector sockConnector;
+//    int fd_cli = sockConnector.ConnectServer("192.168.1.131",3538);
+////    int fd_cli = sockConnector.ConnectServer("127.0.0.1",3538);
+//    SocketTransfer sockTransfer(fd_cli);
 
-    int num = 3;
-    while(num--)
-    {
-        sockTransfer.Send("iwinfo wlan0 scan");
-        string str = sockTransfer.Recv();
-        if (str.empty())
-            break;
-        WifiCellArray cells(str);
+//    int num = 3;
+//    while(num--)
+//    {
+//        sockTransfer.Send("iwinfo wlan0 scan");
+//        string str = sockTransfer.Recv();
+//        if (str.empty())
+//            break;
+//        WifiCellArray cells(str);
 
-        DbOpter dbopter;
-        dbopter.initDB("139.199.27.197","wifipos","iotiot128","wifi_test_set");
-        dbopter.insertWifiCellArray("A8N",cells);
+//        DbOpter dbopter;
+//        dbopter.initDB("139.199.27.197","wifipos","iotiot128","wifi_test_set");
+//        dbopter.insertWifiCellArray("A8N",cells);
 
-    }
+//    }
 //-------------------------------------------------------------------------------
 
 //    DbOpter dbopter;
@@ -54,4 +57,40 @@ int main(int argc, char *argv[])
 
 
     return 0;
+}
+
+void level_threemeters(string pos)
+{
+    SocketConnector sockConnector;
+    int fd_cli = sockConnector.ConnectServer("192.168.1.131",3538);
+//    int fd_cli = sockConnector.ConnectServer("127.0.0.1",3538);
+    SocketTransfer sockTransfer(fd_cli);
+    //training set
+    DbOpter dbopter_train;
+    dbopter_train.initDB("139.199.27.197","wifipos","iotiot128","wifi_training_set");
+    int num = 100;
+    while(num--)
+    {
+        sockTransfer.Send("iwinfo wlan0 scan");
+        string str = sockTransfer.Recv();
+        if (str.empty())
+            break;
+        WifiCellArray cells(str);
+
+        dbopter_train.insertWifiCellArray("level_threemeters",pos,cells);
+    }
+    //test set
+    DbOpter dbopter_test;
+    dbopter_test.initDB("139.199.27.197","wifipos","iotiot128","wifi_test_set");
+    num = 3;
+    while(num--)
+    {
+        sockTransfer.Send("iwinfo wlan0 scan");
+        string str = sockTransfer.Recv();
+        if (str.empty())
+            break;
+        WifiCellArray cells(str);
+
+        dbopter_test.insertWifiCellArray("level_threemeters",pos,cells);
+    }
 }
