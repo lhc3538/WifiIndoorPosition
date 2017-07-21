@@ -4,14 +4,14 @@ CONFIG -= app_bundle
 
 TARGET = WifiLocator
 
-LIBS += -lmysqlclient
+#LIBS += -lmysqlclient
 
 SOURCES += main.cpp \
     ../Common/sockettransfer.cpp \
     socketconnector.cpp \
     wificell.cpp \
     stringutils.cpp \
-    dbopter.cpp \
+#    dbopter.cpp \
     wificellarray.cpp
 
 HEADERS += \
@@ -19,5 +19,5 @@ HEADERS += \
     socketconnector.h \
     wificell.h \
     stringutils.h \
-    dbopter.h \
+#    dbopter.h \
     wificellarray.h

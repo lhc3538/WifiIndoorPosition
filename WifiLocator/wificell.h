@@ -44,6 +44,8 @@ private:
     string quality;
     unsigned long  timestamp;
 
+    int stoi(string str);
+
 };
 
 #endif // WIFICELL_H

@@ -3,7 +3,10 @@
 
 #include <vector>
 #include <iostream>
+#include <string>
 #include <time.h>
+#include <stdlib.h>
+#include <sstream>
 
 //Cell 01 - Address: 8C:AB:8E:A4:CD:58
 //          ESSID: "LeonOpenWrt"
@@ -104,3 +107,14 @@ void WifiCell::setTimestamp(unsigned long value)
 {
     timestamp = value;
 }
+
+int WifiCell::stoi(string str)
+{
+    istringstream iss;//istringstream从string读入,和cin一样仅仅重载了>>,可以把string转为int
+    int rul = 0;
+    iss.clear();//每次使用前先清空
+    iss.str(str);
+    iss>>rul;//将输入流中的内容写入到int n,
+    return rul;
+}
+
